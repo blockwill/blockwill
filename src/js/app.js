@@ -29,11 +29,15 @@ App = {
 
   handleDeploy: function(event) {
     event.preventDefault();
+
     console.log("DEPLOY");
   },
 
   handleValidate: function(event) {
     event.preventDefault();
+    var toAddress = $("#contractAddress").val();
+
+    console.log(toAddress);
     console.log("VALIDATE");
   }
 };
