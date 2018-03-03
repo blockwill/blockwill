@@ -30,7 +30,29 @@ App = {
   handleDeploy: function(event) {
     event.preventDefault();
 
-    console.log("DEPLOY");
+    const recipients = [
+      "0x009a9d9AA8Ab7eAC61b2456769c2EE898016B515",
+      "0x65544c71FEf4317D7391ecc8778Ac699D11fF7F1"
+    ];
+    const percentages = [70, 30];
+
+    const validators = [
+      "0x1fD39587860caCd8b321d6453B9078d91820B40c",
+      "0x37e6AfcB18cDcea7F534dbA0fbFc7fD4299A8971"
+    ];
+    const minValidators = 2;
+
+    jQuery.getJSON("./Will.json").then(data => {
+      const contract = web3.eth.contract(data.abi);
+      contract.new(
+        recipients,
+        percentages,
+        validators,
+        minValidators,
+        { from: web3.eth.accounts[0], gas: 1000000 },
+        () => {}
+      );
+    });
   },
 
   handleValidate: function(event) {
