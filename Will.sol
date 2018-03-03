@@ -27,7 +27,6 @@ contract Will is Ownable {
         
         uint8 totalPercentage;
         assert(_recipients.length == _percentages.length);
-
         recipients.length = _recipients.length;
 
         for (uint i = 0; i < _recipients.length; i++) {
@@ -38,13 +37,12 @@ contract Will is Ownable {
             totalPercentage += percent;
             
             recipients[i] = Recipient(recipientAddress, percent);
-            // Recipient(recipientAddress, percent);
         }
+        
         assert(totalPercentage == 100);
-        
         minValidators = _minValidators;
-        assert(minValidators <= _validators.length);
         
+        assert(minValidators <= _validators.length);
         validators.length = _validators.length;
         
         for (uint j = 0; j < _validators.length; j++) {
@@ -56,11 +54,34 @@ contract Will is Ownable {
         
     }
     
-    // function validate() {
-    //     msg.sender;
-    // }
+    function validate() public {
+        for (uint i = 0; i < validators.length; i++) {
+            if (msg.sender == validators[i].validator) {
+                validators[i].hasValidated = true;
+                break;
+            }
+        }
+        
+        distributeFunds();
+    }
     
-    // function distributeFunds() {}
+    
+    function distributeFunds() private {
+        uint validated;
+        for (uint i = 0; i < validators.length; i++) {
+            if (validators[i].hasValidated == true) {
+                validated++;
+            }
+        }
+        
+        require(validated >= minValidators);
+        
+        for (uint j = 0; j < recipients.length; j++) {
+            uint value = this.balance * (recipients[j].percent / 100);
+            recipients[j].recipient.transfer(value);
+        }
+    }
+    
     // function revoke() onlyOwner {}
     
     function() payable public {
