@@ -86,17 +86,7 @@ contract Will is Destructible {
         validatedCount = validated;
         return validated;
     }
-    
-    function calculateAmounts() private returns (uint[]) {
-        uint[] memory amounts = new uint[](recipients.length);
-        
-        for (uint i = 0; i < recipients.length; i++) {
-            uint value = (this.balance * recipients[i].percent) / 100;
-            recipients[i].recipient.transfer(value);
-            amounts[i] = value;
-        }     
-    }
-    
+
     function distributeFunds() private {
         uint[] memory amounts = calculateAmounts();
         
@@ -107,6 +97,16 @@ contract Will is Destructible {
 
         isWillExecuted = true;
         Distributed();
+    }
+       
+    function calculateAmounts() private view returns (uint[]) {
+        uint[] memory amounts = new uint[](recipients.length);
+        
+        for (uint i = 0; i < recipients.length; i++) {
+            amounts[i] = (this.balance * recipients[i].percent) / 100;
+        }
+        
+        return amounts;
     }
     
     function() payable public {
