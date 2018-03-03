@@ -40,6 +40,8 @@ App = {
     ];
     const minValidators = 1;
 
+    const value = web3.toWei(1, "ether");
+
     jQuery.getJSON("./Will.json").then(data => {
       let contract = web3.eth.contract(data.abi);
       contract.new(
@@ -47,10 +49,13 @@ App = {
         percentages,
         validators,
         minValidators,
-        { from: web3.eth.accounts[0], data: data.bytecode, gas: 6385876 },
-        data => {
-          console.log(data);
-        }
+        {
+          from: web3.eth.accounts[0],
+          data: data.bytecode,
+          gas: 4468057,
+          value: value
+        },
+        data => {}
       );
     });
   },
@@ -67,8 +72,12 @@ App = {
     console.log("VALIDATE");
 
     jQuery.getJSON("./Will.json").then(data => {
+<<<<<<< Updated upstream
       // web3.eth.defaultAccount = web3.eth.accounts[0];
       let contract = web3.eth.contract(data.abi);
+=======
+      const contract = web3.eth.contract(data.abi);
+>>>>>>> Stashed changes
       const contractInstance = contract.at(contractAddress);
       contractInstance.validate(() => {});
     });

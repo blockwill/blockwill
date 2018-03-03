@@ -28,7 +28,7 @@ contract Will is Destructible {
     event Distributed();
     event Revoked();
 
-    function Will(address[] _recipients, uint8[] _percentages, address[] _validators, uint8 _minValidators) public {
+    function Will(address[] _recipients, uint8[] _percentages, address[] _validators, uint8 _minValidators) payable public {
 
         uint8 totalPercentage;
         assert(_recipients.length == _percentages.length);
@@ -109,7 +109,6 @@ contract Will is Destructible {
         return amounts;
     }
 
-    function() payable public {
-    }
+    function() payable public {}
 
 }
