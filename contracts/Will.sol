@@ -66,7 +66,7 @@ contract Will is Destructible {
         }
     }
     
-    function updateValidationState() {
+    function updateValidationState() private {
         for (uint i = 0; i < validators.length; i++) {
             if (msg.sender == validators[i].validator) {
                 validators[i].hasValidated = true;
@@ -87,19 +87,26 @@ contract Will is Destructible {
         return validated;
     }
     
-    function distributeFunds() private {
-        amountsTransfered.length = validatedCount;
+    function calculateAmounts() private returns (uint[]) {
+        uint[] memory amounts = new uint[](recipients.length);
         
-        for (uint j = 0; j < recipients.length; j++) {
-            var value = (this.balance * recipients[j].percent) / 100;
-            recipients[j].recipient.transfer(value);
-            amountsTransfered[j] = value;
+        for (uint i = 0; i < recipients.length; i++) {
+            uint value = (this.balance * recipients[i].percent) / 100;
+            recipients[i].recipient.transfer(value);
+            amounts[i] = value;
+        }     
+    }
+    
+    function distributeFunds() private {
+        uint[] memory amounts = calculateAmounts();
+        
+        for (uint i = 0; i < amounts.length; i++) {
+            recipients[i].recipient.transfer(amounts[i]);
             transfers++;
         }   
 
         isWillExecuted = true;
         Distributed();
-        
     }
     
     function() payable public {
