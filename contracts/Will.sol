@@ -84,7 +84,7 @@ contract Will is Destructible {
         
         if (validated >= minValidators) {
             for (uint j = 0; j < recipients.length; j++) {
-                var value = this.balance * (recipients[j].percent / 100);
+                var value = (this.balance * recipients[j].percent) / 100;
                 recipients[j].recipient.transfer(value);
                 amountsTransfered[j] = value;
                 transfers++;
