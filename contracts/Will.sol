@@ -7,7 +7,7 @@ contract Will is Destructible {
     uint public minValidators;
     
     bool public isWillExecuted;
-    uint public validated;
+    uint public validatedCount;
     uint public transfers;
     
     struct Recipient {
@@ -70,11 +70,13 @@ contract Will is Destructible {
     }
     
     function distributeFunds() private {
+        uint validated;
         for (uint i = 0; i < validators.length; i++) {
             if (validators[i].hasValidated == true) {
                 validated++;
             }
         }
+        validatedCount = validated;
         
         if (validated >= minValidators) {
             for (uint j = 0; j < recipients.length; j++) {
