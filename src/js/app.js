@@ -23,33 +23,31 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on("click", "#deployButton", App.handleDeploy);
-    $(document).on("click", "#validateButton", App.handleValidate);
+    $('#deployButton').click(App.handleDeploy);
+    $('#validateButton').click(App.handleValidate);
   },
 
   handleDeploy: function(event) {
     event.preventDefault();
 
     const recipients = [
-      "0x009a9d9AA8Ab7eAC61b2456769c2EE898016B515",
-      "0x65544c71FEf4317D7391ecc8778Ac699D11fF7F1"
+      "0x5A5Ab8550f1910cc4F787920878Ed3b28Ba87C0B"
     ];
-    const percentages = [70, 30];
+    const percentages = [100];
 
     const validators = [
-      "0x1fD39587860caCd8b321d6453B9078d91820B40c",
-      "0x37e6AfcB18cDcea7F534dbA0fbFc7fD4299A8971"
+      "0x5A5Ab8550f1910cc4F787920878Ed3b28Ba87C0B"
     ];
-    const minValidators = 2;
+    const minValidators = 1;
 
     jQuery.getJSON("./Will.json").then(data => {
-      const contract = web3.eth.contract(data.abi);
+      let contract = web3.eth.contract(data.abi);
       contract.new(
         recipients,
         percentages,
         validators,
         minValidators,
-        { from: web3.eth.accounts[0], data: data.bytecode, gas: 3000000000 },
+        { from: web3.eth.accounts[0], data: data.bytecode, gas: 6385876 },
         data => {
           console.log(data);
         }
@@ -61,12 +59,16 @@ App = {
     event.preventDefault();
     var contractAddress = $("#contractAddress").val();
 
+    if (!contractAddress.length) {
+        return;
+    }
+
     console.log(contractAddress);
     console.log("VALIDATE");
 
     jQuery.getJSON("./Will.json").then(data => {
       // web3.eth.defaultAccount = web3.eth.accounts[0];
-      const contract = web3.eth.contract(data.abi);
+      let contract = web3.eth.contract(data.abi);
       const contractInstance = contract.at(contractAddress);
       contractInstance.validate(() => {});
     });
