@@ -16,5 +16,6 @@ npm install -g truffle
 npm install
 truffle compile
 truffle deploy
+truffle migrate
 npm run dev
 ```
