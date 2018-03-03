@@ -63,18 +63,10 @@ App = {
     console.log("VALIDATE");
 
     jQuery.getJSON('./Will.json').then(data => {
+      // web3.eth.defaultAccount = web3.eth.accounts[0];
       const contract = web3.eth.contract(data.abi);
       const contractInstance = contract.at(contractAddress);
-
-      // const transactionObject = {
-      //   from: web3.eth.accounts[0],
-      //   gas: 21000,
-      //   gasPrice: 9
-      // };
-      contractInstance.validate( () => {
-      });
-      // contractInstance.createRandomAgency.sendTransaction('validate', transactionObject, (error, result) => { // do something with error checking/result here });
-    // });
+      contractInstance.validate( () => {});
   })}
 }
 
