@@ -12,6 +12,7 @@ Technologies:
 ## Setup
 
 ```
+npm install -g truffle
 npm install
 truffle compile
 truffle deploy
