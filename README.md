@@ -8,11 +8,16 @@ Technologies:
 - Remix IDE
 
 ---
+## Prerequisites
+
+```
+npm i -g ethereumjs-testrpc
+npm i -g truffle
+```
 
 ## Setup
 
 ```
-npm install -g truffle
 npm install
 truffle compile
 truffle deploy
