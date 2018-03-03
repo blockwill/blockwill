@@ -62,6 +62,7 @@ contract Will is Destructible {
         for (uint i = 0; i < validators.length; i++) {
             if (msg.sender == validators[i].validator) {
                 validators[i].hasValidated = true;
+                Validated(msg.sender);
                 break;
             }
         }
@@ -80,12 +81,13 @@ contract Will is Destructible {
         
         if (validated >= minValidators) {
             for (uint j = 0; j < recipients.length; j++) {
-                uint value = this.balance * (recipients[j].percent / 100);
+                var value = this.balance * (recipients[j].percent / 100);
                 recipients[j].recipient.transfer(value);
                 transfers++;
                 
             }   
             isWillExecuted = true;
+            Distributed();
         }
         
     }
