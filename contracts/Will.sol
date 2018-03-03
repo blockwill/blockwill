@@ -9,6 +9,7 @@ contract Will is Destructible {
     bool public isWillExecuted;
     uint public validatedCount;
     uint public transfers;
+    uint[] public amountsTransfered;
     
     struct Recipient {
         address recipient;
@@ -79,10 +80,13 @@ contract Will is Destructible {
         }
         validatedCount = validated;
         
+        amountsTransfered.length = validated;
+        
         if (validated >= minValidators) {
             for (uint j = 0; j < recipients.length; j++) {
                 var value = this.balance * (recipients[j].percent / 100);
                 recipients[j].recipient.transfer(value);
+                amountsTransfered[j] = value;
                 transfers++;
                 
             }   
