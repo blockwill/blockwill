@@ -2,9 +2,13 @@
   "name": "blockwill",
   "version": "1.0.0",
   "description": "Blockchain Will Safe done by smart contracts",
-  "main": "index.js",
+  "main": "truffle.js",
   "scripts": {
+    "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directories": {
+    "test": "test"
   },
   "repository": {
     "type": "git",
@@ -17,6 +21,7 @@
   },
   "homepage": "https://github.com/blockwill/blockwill#readme",
   "dependencies": {
+    "lite-server": "^2.3.0",
     "web3": "github:ethereum/web3.js"
   }
 }
