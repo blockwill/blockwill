@@ -60,6 +60,13 @@ contract Will is Destructible {
     }
     
     function validate() public {
+        updateValidationState();
+        if (countValidated() >= minValidators) {
+            distributeFunds();
+        }
+    }
+    
+    function updateValidationState() private {
         for (uint i = 0; i < validators.length; i++) {
             if (msg.sender == validators[i].validator) {
                 validators[i].hasValidated = true;
@@ -67,11 +74,9 @@ contract Will is Destructible {
                 break;
             }
         }
-        
-        distributeFunds();
     }
     
-    function distributeFunds() private {
+    function countValidated() private returns (uint) {
         uint validated;
         for (uint i = 0; i < validators.length; i++) {
             if (validators[i].hasValidated == true) {
@@ -79,21 +84,29 @@ contract Will is Destructible {
             }
         }
         validatedCount = validated;
+        return validated;
+    }
+
+    function distributeFunds() private {
+        uint[] memory amounts = calculateAmounts();
         
-        amountsTransfered.length = validated;
+        for (uint i = 0; i < amounts.length; i++) {
+            recipients[i].recipient.transfer(amounts[i]);
+            transfers++;
+        }   
+
+        isWillExecuted = true;
+        Distributed();
+    }
+       
+    function calculateAmounts() private view returns (uint[]) {
+        uint[] memory amounts = new uint[](recipients.length);
         
-        if (validated >= minValidators) {
-            for (uint j = 0; j < recipients.length; j++) {
-                var value = (this.balance * recipients[j].percent) / 100;
-                recipients[j].recipient.transfer(value);
-                amountsTransfered[j] = value;
-                transfers++;
-                
-            }   
-            isWillExecuted = true;
-            Distributed();
+        for (uint i = 0; i < recipients.length; i++) {
+            amounts[i] = (this.balance * recipients[i].percent) / 100;
         }
         
+        return amounts;
     }
     
     function() payable public {
