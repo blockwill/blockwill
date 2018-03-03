@@ -73,12 +73,13 @@ contract Will is Destructible {
             }
         }
         
-        require(validated >= minValidators);
-        
-        for (uint j = 0; j < recipients.length; j++) {
-            uint value = this.balance * (recipients[j].percent / 100);
-            recipients[j].recipient.transfer(value);
+        if (validated >= minValidators) {
+            for (uint j = 0; j < recipients.length; j++) {
+                uint value = this.balance * (recipients[j].percent / 100);
+                recipients[j].recipient.transfer(value);
+            }    
         }
+        
     }
     
     function() payable public {
