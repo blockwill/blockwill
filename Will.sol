@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import './Ownable.sol';
+import './Destructible.sol';
 
-contract Will is Ownable {
+contract Will is Destructible {
     
     uint private minValidators;
     
@@ -65,7 +65,6 @@ contract Will is Ownable {
         distributeFunds();
     }
     
-    
     function distributeFunds() private {
         uint validated;
         for (uint i = 0; i < validators.length; i++) {
@@ -81,8 +80,6 @@ contract Will is Ownable {
             recipients[j].recipient.transfer(value);
         }
     }
-    
-    // function revoke() onlyOwner {}
     
     function() payable public {
     }
