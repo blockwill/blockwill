@@ -38,7 +38,7 @@ contract Will is Destructible {
             address recipientAddress = _recipients[i];
             uint8 percent = _percentages[i];
 
-            assert(recipientAddress != 0x0);
+            assert(recipientAddress != address(0));
             totalPercentage += percent;
 
             recipients[i] = Recipient(recipientAddress, percent);
