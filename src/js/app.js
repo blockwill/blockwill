@@ -48,8 +48,17 @@ App = {
         validators,
         minValidators,
         { from: web3.eth.accounts[0], data: data.bytecode, gas: 6385876 },
-        data => {
-          console.log(data);
+        (err, res) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            console.log(res.transactionHash);
+
+            if (res.address) {
+                console.log('Contract address: ' + res.address);
+            }
         }
       );
     });
