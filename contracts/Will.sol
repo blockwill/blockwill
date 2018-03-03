@@ -4,7 +4,11 @@ import './Destructible.sol';
 
 contract Will is Destructible {
     
-    uint private minValidators;
+    uint public minValidators;
+    
+    bool public isWillExecuted;
+    uint public validated;
+    uint public transfers;
     
     struct Recipient {
         address recipient;
@@ -16,8 +20,8 @@ contract Will is Destructible {
         bool hasValidated;
     }
     
-    Recipient[] recipients;
-    Validator[] validators;
+    Recipient[] public recipients;
+    Validator[] public validators;
     
     event Validated(address);
     event Distributed();
@@ -66,7 +70,6 @@ contract Will is Destructible {
     }
     
     function distributeFunds() private {
-        uint validated;
         for (uint i = 0; i < validators.length; i++) {
             if (validators[i].hasValidated == true) {
                 validated++;
@@ -77,7 +80,10 @@ contract Will is Destructible {
             for (uint j = 0; j < recipients.length; j++) {
                 uint value = this.balance * (recipients[j].percent / 100);
                 recipients[j].recipient.transfer(value);
-            }    
+                transfers++;
+                
+            }   
+            isWillExecuted = true;
         }
         
     }
