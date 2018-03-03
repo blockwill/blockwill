@@ -49,8 +49,10 @@ App = {
         percentages,
         validators,
         minValidators,
-        { from: web3.eth.accounts[0], gas: 1000000 },
-        () => {}
+        { from: web3.eth.accounts[0], data: data.bytecode, gas: 3000000000 },
+        data => {
+          console.log(data);
+        }
       );
     });
   },
@@ -62,13 +64,14 @@ App = {
     console.log(contractAddress);
     console.log("VALIDATE");
 
-    jQuery.getJSON('./Will.json').then(data => {
+    jQuery.getJSON("./Will.json").then(data => {
       // web3.eth.defaultAccount = web3.eth.accounts[0];
       const contract = web3.eth.contract(data.abi);
       const contractInstance = contract.at(contractAddress);
-      contractInstance.validate( () => {});
-  })}
-}
+      contractInstance.validate(() => {});
+    });
+  }
+};
 
 $(function() {
   $(window).load(function() {
