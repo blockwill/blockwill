@@ -254,7 +254,7 @@ App = {
       "type": "function"
     }
   ],
-
+  
   init: function() {
     return App.initWeb3();
   },
