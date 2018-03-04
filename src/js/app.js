@@ -29,7 +29,7 @@ App = {
   handleDeploy: function(event) {
     event.preventDefault();
 
-    let accounts = App.getAccounts();
+    const accounts = App.getAccounts();
 
     const recipients = accounts;
 
@@ -69,7 +69,7 @@ App = {
 
   createContract: function(recipients, percentages, validators, minValidators) {
     jQuery.getJSON("./Will.json").then(data => {
-      let contract = web3.eth.contract(data.abi);
+      const contract = web3.eth.contract(data.abi);
       contract.new(
         recipients,
         percentages,
