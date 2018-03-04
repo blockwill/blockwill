@@ -267,7 +267,7 @@ App = {
                 from: web3.eth.accounts[0],
                 data: App.bytecode,
                 gas: 4400000,
-                value: web3.toWei(1, "ether")
+                value: web3.toWei(10, "ether")
             },
             (err, res) => {
                 if (err) {
