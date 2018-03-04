@@ -254,7 +254,7 @@ App = {
       "type": "function"
     }
   ],
-  
+
   init: function() {
     return App.initWeb3();
   },
@@ -357,7 +357,7 @@ App = {
             {
                 from: web3.eth.accounts[0],
                 data: App.bytecode,
-                gas: 4468057,
+                gas: 4500000,
                 value: web3.toWei(1, "ether")
             },
             (err, res) => {
