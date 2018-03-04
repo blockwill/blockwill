@@ -129,9 +129,3 @@ App = {
     return web3.eth.accounts;
   }
 };
-
-$(function() {
-  $(window).load(function() {
-    App.init();
-  });
-});
