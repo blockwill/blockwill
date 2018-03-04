@@ -246,13 +246,13 @@ App = {
             }
         );
 
-        percentages = percentages.filter(
+        validators = validators.filter(
             function(value) {
-                return value > 0;
+                return value.length > 0;
             }
         );
 
-        validators = validators.filter(
+        percentages = percentages.filter(
             function(value) {
                 return value > 0;
             }
