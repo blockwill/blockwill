@@ -22,8 +22,12 @@ App = {
   },
 
   bindEvents: function() {
-    $('#deployButton').click(App.handleDeploy);
-    $('#validateButton').click(App.handleValidate);
+    if ($('#deployButton').length) {
+        $('#deployButton').click(App.handleDeploy);
+    }
+    if ($('#validateButton').length) {
+        $('#validateButton').click(App.handleValidate);
+    }
   },
 
   handleDeploy: function(event) {
