@@ -29,15 +29,28 @@ App = {
   handleDeploy: function(event) {
     event.preventDefault();
 
-    const recipients = [
-      "0x5A5Ab8550f1910cc4F787920878Ed3b28Ba87C0B"
-    ];
-    const percentages = [100];
+    let accounts = App.getAccounts();
 
-    const validators = [
-      "0x5A5Ab8550f1910cc4F787920878Ed3b28Ba87C0B"
-    ];
-    const minValidators = 1;
+    const recipients = accounts;
+
+    var percentages = [];
+    var left = 100;
+
+    for(index in accounts) {
+        percentage = Math.ceil(Math.random() * (left - 1) + 1);
+        if (index == accounts.length - 1) {
+            percentage = left;
+        } else {
+            left -= percentages;
+        }
+
+        percentages.push(percentage);
+    }
+
+    console.log(percentages);
+
+    const validators = accounts;
+    const minValidators = accounts.length;
 
     App.createContract(
         recipients,
@@ -110,6 +123,10 @@ App = {
 
   isAddress: function(address) {
     return web3.utils.isAddress(address);
+  },
+
+  getAccounts: function() {
+    return web3.eth.accounts;
   }
 };
 
