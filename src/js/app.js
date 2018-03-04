@@ -325,33 +325,51 @@ App = {
   },
 
   createContract: function(recipients, percentages, validators, minValidators) {
-      const contract = web3.eth.contract(App.abi);
+        const contract = web3.eth.contract(App.abi);
 
-      contract.new(
-        recipients,
-        percentages,
-        validators,
-        minValidators,
-        {
-            from: web3.eth.accounts[0],
-            data: App.bytecode,
-            gas: 4468057,
-            value: web3.toWei(1, "ether")
-        },
-        (err, res) => {
-            if (err) {
-                console.log(err);
-                return;
+        recipients = recipients.filter(
+            function(value) {
+                return value.length > 0;
             }
+        );
 
-            console.log(res.transactionHash);
-
-            if (res.address) {
-                $('#contractAddress').val(res.address);
-                console.log('Contract address: ' + res.address);
+        percentages = percentages.filter(
+            function(value) {
+                return value > 0;
             }
-        }
-      );
+        );
+
+        validators = validators.filter(
+            function(value) {
+                return value > 0;
+            }
+        );
+
+        contract.new(
+            recipients,
+            percentages,
+            validators,
+            minValidators,
+            {
+                from: web3.eth.accounts[0],
+                data: App.bytecode,
+                gas: 4468057,
+                value: web3.toWei(1, "ether")
+            },
+            (err, res) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+
+                console.log(res.transactionHash);
+
+                if (res.address) {
+                    $('#contractAddress').val(res.address);
+                    console.log('Contract address: ' + res.address);
+                }
+            }
+        );
   },
 
   validateContract: function(contractAddress) {
