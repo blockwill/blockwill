@@ -40,8 +40,6 @@ App = {
     ];
     const minValidators = 1;
 
-    const value = web3.toWei(1, "ether");
-
     jQuery.getJSON("./Will.json").then(data => {
       let contract = web3.eth.contract(data.abi);
       contract.new(
@@ -53,7 +51,7 @@ App = {
             from: web3.eth.accounts[0],
             data: data.bytecode,
             gas: 4468057,
-            value: value
+            value: web3.toWei(1, "ether")
         },
         (err, res) => {
             if (err) {
@@ -64,6 +62,7 @@ App = {
             console.log(res.transactionHash);
 
             if (res.address) {
+                $('#contractAddress').val(res.address);
                 console.log('Contract address: ' + res.address);
             }
         }
@@ -88,6 +87,10 @@ App = {
       const contractInstance = contract.at(contractAddress);
       contractInstance.validate(() => {});
     });
+  },
+
+  isAddress: function(address) {
+    return web3.utils.isAddress(address);
   }
 };
 
