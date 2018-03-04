@@ -78,9 +78,6 @@ App = {
         return;
     }
 
-    console.log(contractAddress);
-    console.log("VALIDATE");
-
     jQuery.getJSON("./Will.json").then(data => {
       // web3.eth.defaultAccount = web3.eth.accounts[0];
       let contract = web3.eth.contract(data.abi);
